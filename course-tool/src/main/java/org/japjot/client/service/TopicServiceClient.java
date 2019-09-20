@@ -3,9 +3,9 @@ package org.japjot.client.service;
 import java.util.List;
 
 import org.japjot.client.*;
+import org.japjot.client.model.TopicClient;
 import org.japjot.client.url.EndPoints;
 import org.japjot.client.repository.TopicRepositoriesClient;
-import org.japjot.client.topic.TopicClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
