@@ -11,7 +11,7 @@
                   CRUD Operations
        <a href="/create-topic">Create Topic</a>
        <a href="/get-topic">Topic details</a>
-       <a href="/update-topic">Update Topic</a>
+       <a href="/select-To-Update-Topic">Update Topic</a>
        <a href="/delete-topic">Delete Topic</a>
     
 </body>

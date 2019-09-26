@@ -14,6 +14,9 @@
         Description: <form:input name="description" path="description"/>
         <input type="submit" value="Submit" />
         </form:form>
+        
+        <br>
+         <a href="/index1">Home Page</a>
 </body>
 </html>
 

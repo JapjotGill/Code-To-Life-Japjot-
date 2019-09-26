@@ -24,6 +24,10 @@
        </c:forEach>
         <input type="submit" value="Submit" />
         </form:form>
+        
+         <br>
+         <a href="/index1">Home Page</a>
+        
 </body>
 </html>
 

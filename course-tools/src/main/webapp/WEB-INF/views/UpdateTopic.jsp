@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Create User</title>
+<meta charset="ISO-8859-1">
+<title>Update Selected Topic</title>
 </head>
 <body>
-        <h2>Update User Information</h2>
-        <form id="updateForm" action="service/{id}" >
-      
-        Topic ID: <input name="id" />
-        Name: <input name="name" />
-        Description: <input name="description" />
+ <h2>Updating Selected Topic</h2>
+        <form:form action="/update-topic-${id}" modelAttribute="topicForm">
+        Name: <form:input name="name" path="name"/>
+        Description: <form:input name="description" path="description"/>
         <input type="submit" value="Submit" />
-        </form> 
+        </form:form>
+        <br>
+         <a href="/index1">Home Page</a>
 </body>
 </html>

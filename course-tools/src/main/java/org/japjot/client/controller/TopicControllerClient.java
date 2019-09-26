@@ -33,37 +33,6 @@ public class TopicControllerClient {
 	@Autowired
 	private TopicServiceClient topicService;
 	
-	@RequestMapping("/service/{id}")
-	public TopicClient getTopic(@PathVariable long id)
-	{
-		return topicService.getTopic(id);
-	}
-	
-	@RequestMapping("/service")
-	@Produces(MediaType.TEXT_XML_VALUE)
-	public List<TopicClient> getAll(){
-		return topicService.AllTopics();
-	}
-	
-	
-	@PostMapping("/service")
-	@Consumes(MediaType.MULTIPART_FORM_DATA_VALUE)
-	public void AddTopicClient(@FormParam(value ="topicClient") TopicClient topicClient)
-	{
-		topicService.AddTopicClient(topicClient);
-	}
-	
-	@DeleteMapping("/service/{id}")
-	public void RemoveTopicClient(@PathVariable long id)
-	{
-		topicService.RemoveTopicClient(id);
-	}
-	
-	@PutMapping("/service/{id}")
-	public void UpdateTopicClient(@RequestBody TopicClient topicClient,@PathVariable long id)
-	{
-		topicService.UpdateTopicClient(topicClient,id);
-	}
 	@RequestMapping("index1")
 	public String indexForm() {
 		return "index1";
@@ -77,34 +46,101 @@ public class TopicControllerClient {
 		 topicService.AddTopicClient(topicClient);
 		 topicForm= new TopicForm();
 		 model.put("topicForm", topicForm);
-		return "CreateTopic";
+		 return "createTopic";
 	}
 	@RequestMapping("get-topic")
 	public String getTopic(Map<String, Object> model, @ModelAttribute TopicForm topicForm) {
-		List<TopicClient> client = topicService.AllTopics();
-	
 		
+		List<TopicClient> client = topicService.AllTopics();
 		model.put("topicForm", topicForm);
 		model.put("client", client);
-		return "GetTopic";
+		return "getTopic";
 	}
-	@RequestMapping("/DeleteTopic")
-	public ModelAndView DeleteTopic() {
-
-		return new ModelAndView("DeleteTopic");
-	}
-	@RequestMapping("/update-topic")
-	public String UpdateTopic() {
+	
+	@RequestMapping("/select-To-Update-Topic")
+	public String UpdateTopic(Map<String, Object> model,@ModelAttribute TopicClient topicClient) {
 			
-		return "update-topic";
+		List<TopicClient> client = topicService.AllTopics();
+		model.put("topicClient", topicClient);
+		model.put("client", client);
+		return "selectToUpdateTopic";
+	}
+	@RequestMapping("/update-topic-{id}")
+	public String updatedTopic(Map<String, Object> model,@ModelAttribute TopicForm topicForm,@PathVariable long id) {
+		
+		TopicClient topicClient = new TopicClient();
+		topicClient.setId(id);
+		topicClient.setDescription(topicForm.getDescription());
+		topicClient.setName(topicForm.getName());
+		topicService.UpdateTopicClient(topicClient,id);
+		topicForm= new TopicForm();
+		model.put("topicForm", topicForm);
+		return "updateTopic";
 	}
 	
 	@RequestMapping("/topic/{id}")
 	public String getTopicInfo(Map<String, Object> model, @ModelAttribute TopicForm topicForm, @PathVariable(value = "id")long id) {
-		
+
 		System.out.println(id);
 		model.put("topicForm", topicForm);
 		return "get-topic-info";
 	}
+	
+	@RequestMapping("delete-topic")
+	public String DeleteTopic(Map<String, Object> model,@ModelAttribute TopicForm topicForm) {
+		
+		TopicClient topicClient = new TopicClient();
+		topicClient.setId(topicForm.getId());
+		topicForm= new TopicForm();
+		model.put("topicForm",topicForm);
+		return "deleteTopic";
+	}
+	
+	@RequestMapping("/delete-topic-{id}")
+	public String DeleteTopicId(Map<String, Object> model,@ModelAttribute TopicForm topicForm,@FormParam(value = "id") long id) {
+		
+		TopicClient topicClient = new TopicClient();
+		topicClient.setId(topicForm.getId());
+	    topicService.RemoveTopicClient(id);
+		topicForm= new TopicForm();
+		model.put("topicForm",topicForm);
+		model.put("id",id);
+		return "deleteTopic";
+	    
+	}
+	
+	
+	/*@RequestMapping("/DeleteTopic")
+	public ModelAndView DeleteTopic() {
+
+		return new ModelAndView("DeleteTopic");
+	}
+	*/
+	/*
+	 * @RequestMapping("/service/{id}") public TopicClient getTopic(@PathVariable
+	 * long id) { return topicService.getTopic(id); }
+	 * 
+	 * @RequestMapping("/service")
+	 * 
+	 * @Produces(MediaType.TEXT_XML_VALUE) public List<TopicClient> getAll(){ return
+	 * topicService.AllTopics(); }
+	 * 
+	 * 
+	 * @PostMapping("/service")
+	 * 
+	 * @Consumes(MediaType.MULTIPART_FORM_DATA_VALUE) public void
+	 * AddTopicClient(@FormParam(value ="topicClient") TopicClient topicClient) {
+	 * topicService.AddTopicClient(topicClient); }
+	 * 
+	 * @DeleteMapping("/service/{id}") public void RemoveTopicClient(@PathVariable
+	 * long id) { topicService.RemoveTopicClient(id); }
+	 * 
+	 * @PutMapping("/service/{id}") public void UpdateTopicClient(@RequestBody
+	 * TopicClient topicClient,@PathVariable long id) {
+	 * topicService.UpdateTopicClient(topicClient,id); }
+	 */
+	
+	
+	
 	
 }
